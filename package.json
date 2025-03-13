@@ -1,6 +1,6 @@
 {
   "name": "changelog",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "github actions for automatic changelog",
   "main": "index.js",
   "scripts": {
