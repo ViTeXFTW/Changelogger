@@ -1,12 +1,10 @@
 name: Release
 on:
     pull_request:
-        types: [ closed ]
         branches: [ release ]
 
 jobs:
     changelog:
-        if: ${{ github.event.pull_request.merged == true }}
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v2
@@ -27,3 +25,5 @@ jobs:
                 tag_name: ${{ steps.conventional-changelog.outputs.tag }}
                 release_name: ${{ steps.conventional-changelog.outputs.tag }}
                 body: ${{ steps.conventional-changelog.outputs.clean_changelog }}
+
+
