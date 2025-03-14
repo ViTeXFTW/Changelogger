@@ -1,38 +1,62 @@
 {
-    "name": "autochangelog",
-    "version": "1.0.2",
-    "description": "automatically updates the changelog based on conventional commits using github workflows",
-    "main": "index.js",
-    "scripts": {
-      "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "repository": {
-      "type": "git",
-      "url": "https://github.com/ViTeXFTW/Changelogger.git"
-    },
-    "author": "ViTeXFTW",
-    "license": "Unlicense",
-    "bugs": {
-      "url": "https://github.com/ViTeXFTW/Changelogger/issues"
-    },
-    "homepage": "https://github.com/ViTeXFTW/Changelogger#readme",
-    "devDependencies": {
-      "standard-version": "^9.5.0"
-    },
-    "standard-version": {
-        "types": [
-            {"type": "feat", "section": "Features"},
-            {"type": "fix", "section": "Bug Fixes"},
-            {"type": "chore", "hidden": true},
-            {"type": "docs", "hidden": true},
-            {"type": "style", "hidden": true},
-            {"type": "refactor", "hidden": true},
-            {"type": "perf", "hidden": true},
-            {"type": "test", "hidden": true}
-        ],
-        "preMajor": false,
-        "commitUrlFormat": "https://github.com/ViTeXFTW/Changelogger/commit/{{hash}}",
-        "compareUrlFormat": "https://github.com/ViTeXFTW/Changelogger/compare/{{previousTag}}...{{currentTag}}",
-        "issueUrlFormat": "https://github.com/ViTeXFTW/Changelogger/issues/{{id}}"
-    }
-}   
+  "name": "autochangelog",
+  "version": "1.0.3",
+  "description": "automatically updates the changelog based on conventional commits using github workflows",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ViTeXFTW/Changelogger.git"
+  },
+  "author": "ViTeXFTW",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/ViTeXFTW/Changelogger/issues"
+  },
+  "homepage": "https://github.com/ViTeXFTW/Changelogger#readme",
+  "devDependencies": {
+    "standard-version": "^9.5.0"
+  },
+  "standard-version": {
+    "types": [
+      {
+        "type": "feat",
+        "section": "Features"
+      },
+      {
+        "type": "fix",
+        "section": "Bug Fixes"
+      },
+      {
+        "type": "chore",
+        "hidden": true
+      },
+      {
+        "type": "docs",
+        "hidden": true
+      },
+      {
+        "type": "style",
+        "hidden": true
+      },
+      {
+        "type": "refactor",
+        "hidden": true
+      },
+      {
+        "type": "perf",
+        "hidden": true
+      },
+      {
+        "type": "test",
+        "hidden": true
+      }
+    ],
+    "preMajor": false,
+    "commitUrlFormat": "https://github.com/ViTeXFTW/Changelogger/commit/{{hash}}",
+    "compareUrlFormat": "https://github.com/ViTeXFTW/Changelogger/compare/{{previousTag}}...{{currentTag}}",
+    "issueUrlFormat": "https://github.com/ViTeXFTW/Changelogger/issues/{{id}}"
+  }
+}
