@@ -59,10 +59,18 @@ def calculate_new_version(current_version: str, merged_prs: list[PullRequest.Pul
             
     try:
         major_num, minor_num, patch_num = map(int, current_version.strip("v").split("."))
-        return f"v{major_num + (1 if major_bump else 0)}.{minor_num + (1 if minor_bump else 0)}.{patch_num + (1 if patch_bump else 0)}"
     except:
         print("Invalid version format.")
         return None
+    
+    if major_bump:
+        return f"v{major_num + 1}.0.0"
+    elif minor_bump:
+        return f"v{major_num}.{minor_num + 1}.0"
+    elif patch_bump:
+        return f"v{major_num}.{minor_num}.{patch_num + 1}"
+    else:
+        return current_version
     
 def update_changelog(new_entry: str) -> str:
     try:
