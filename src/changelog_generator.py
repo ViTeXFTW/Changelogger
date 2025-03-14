@@ -6,7 +6,7 @@ from constants import RELEASE_BRANCH, authenticate
 
 # Meta information
 CHANGELOG_FILE = "CHANGELOG.md"
-COMMIT_MESSAGE = "chore(changelog): update changelog"
+COMMIT_MESSAGE = "chore(changelog): update changelog and create release"
 
 ghub, repository = authenticate()
 

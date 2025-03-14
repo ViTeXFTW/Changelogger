@@ -127,3 +127,4 @@ if commit_errors:
         report += "\n"
         
     post_or_update_pr_comment(pr, report)
+    exit(4)
