@@ -1,0 +1,3 @@
+[semantic_release.branches.release]
+match = "release-action"
+prerelease = false
