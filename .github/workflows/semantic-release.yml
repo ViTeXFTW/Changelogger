@@ -3,7 +3,7 @@ name: Semantic Release
 on:
     pull_request:
         types: [ closed ]
-        branches: [ release-* ]
+        branches: [ release-action ]
 
 jobs:
     semantic-release:
@@ -19,6 +19,7 @@ jobs:
             - name: Semantic Release
               uses: python-semantic-release/python-semantic-release@v9.21.0
               with:
+                
                 github_token: ${{ secrets.GITHUB_TOKEN }}
                 changelog: true
                 commit: true
