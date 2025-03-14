@@ -30,8 +30,10 @@ for pr in merged_prs:
     
 print("Changelog entry generated:\n", changelog_entry)
 
-if update_changelog(changelog_entry):
-    print("Changelog updated successfully.")
-else:
+if not update_changelog(changelog_entry):
     print("Failed to update the changelog.")
     exit(4)
+
+create_release(new_version)
+
+print("Done.")

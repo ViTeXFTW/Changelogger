@@ -114,3 +114,17 @@ def update_changelog(new_entry: str) -> str:
     except:
         print("Cannot update the changelog file.")
         return ""
+    
+def create_release(new_version: str) -> bool:
+    try:
+        repository.create_git_release(
+            tag=new_version,
+            name=new_version,
+            message="Release " + new_version,
+            target_commitish=RELEASE_BRANCH
+        )
+        print("Release created successfully.")
+        return True
+    except:
+        print("Cannot create the release.")
+        return False
