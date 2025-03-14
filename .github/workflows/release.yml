@@ -30,6 +30,11 @@ jobs:
                 else
                   npx standard-version
                 fi
+                echo "Git log:"
+                git log -1 --pretty=%B
+
+                echo "Grep result for 'BREAKING CHANGE':"
+                git log -1 --pretty=%B | grep -iq "BREAKING CHANGE" && echo "Found 'BREAKING CHANGE'" || echo "'BREAKING CHANGE' not found"
                 git push --follow-tags origin release
 
             - name: get-npm-version
