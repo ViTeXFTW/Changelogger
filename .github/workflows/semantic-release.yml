@@ -23,6 +23,11 @@ jobs:
                 changelog: true
                 commit: true
                 push: true
-                tag: true
-                vcs_release: true
+
+            - name: Create Release
+              uses: python-semantic-release/publish-action@v9.21.0
+              with:
+                github_token: ${{ secrets.GITHUB_TOKEN }}
+                
+
                 
