@@ -30,6 +30,7 @@ jobs:
                 else
                   npx standard-version
                 fi
+                git push --follow-tags origin release
 
             - name: get-npm-version
               id: package-version
