@@ -19,9 +19,17 @@ jobs:
               with:
                 node-version: '12.x'
 
-            - name: Bump version
+            - name: Install Dependencies
+              run: npm install
+
+            - name: Bump Version and Update Changelog
               id: version
-              uses: qzb/standard-version-action@v1.0.5
+              run: |
+                if git log -1 --pretty=%B | grep -iq "BREAKING CHANGE"; then
+                  npx standard-version --release-as major
+                else
+                  npx standard-version
+                fi
 
             - name: get-npm-version
               id: package-version
