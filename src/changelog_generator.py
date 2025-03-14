@@ -125,7 +125,7 @@ print("Latest version:", latest_version)
 merged_prs = get_merged_prs(release_info["latest_release_date"])
 if not merged_prs:
     print("No merged PRs found. Exiting...")
-    exit(2)
+    exit(0)
     
 new_version = calculate_new_version(latest_version, merged_prs)
 if not new_version:
