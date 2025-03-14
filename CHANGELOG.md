@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 - Test/linter (#22)
 
 
+## v1.2.1 (2025-03-14)
+- Test/linter (#22)
+
+
 ## v1.1.1 (2025-03-14)
 - fix(asdf): asdf (#19)
 - feat(changelog script): updated changelog insert placement (#18)
