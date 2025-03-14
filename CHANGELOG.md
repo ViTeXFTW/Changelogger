@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## v3.0.0 (2025-03-14)
+- feat!: breaking change test (#25)
+
+
 ## v2.2.1 (2025-03-14)
 - BREAKING CHANGE: test (#23)
 - Test/linter (#22)
