@@ -1,0 +1,13 @@
+{
+    "types": [
+        "BREAKING CHANGE",
+        "feat",
+        "fix",
+        "docs",
+        "style",
+        "refactor",
+        "chore",
+        "perf",
+        "test"
+    ]
+}

@@ -2,33 +2,13 @@ from github import Github, Repository, PullRequest, ContentFile
 import os
 from datetime import datetime
 from dotenv import load_dotenv
-
-# Load environment variables from a .env file
-load_dotenv()
-# Access the GitHub token from the environment
-GH_TOKEN = os.getenv("GH_TOKEN")
+from constants import RELEASE_BRANCH, authenticate
 
 # Meta information
-REPO_NAME = "ViTeXFTW/Changelogger"
-RELEASE_BRANCH = "release"
 CHANGELOG_FILE = "CHANGELOG.md"
 COMMIT_MESSAGE = "chore(changelog): update changelog"
 
-# Authenticate with GitHub
-
-ghub = None
-repository = None
-
-def authenticate() -> bool:
-    global ghub, repository
-    try:
-        ghub = Github(GH_TOKEN)
-        repository = ghub.get_repo(REPO_NAME)
-        return True
-    except:
-        print("Authentication failed.")
-        return False
-
+ghub, repository = authenticate()
 
 def get_latest_release() -> dict:
     """
@@ -128,3 +108,42 @@ def create_release(new_version: str) -> bool:
     except:
         print("Cannot create the release.")
         return False
+    
+
+if not authenticate():
+    print("Authentication failed. Exiting...")
+    exit(0)
+
+release_info = get_latest_release()
+if not release_info:
+    print("No releases found. Exiting...")
+    exit(1)
+    
+latest_version = release_info["latest_version"]
+print("Latest version:", latest_version)
+
+merged_prs = get_merged_prs(release_info["latest_release_date"])
+if not merged_prs:
+    print("No merged PRs found. Exiting...")
+    exit(2)
+    
+new_version = calculate_new_version(latest_version, merged_prs)
+if not new_version:
+    print("Invalid version format. Exiting...")
+    exit(3)
+    
+print("New version:", new_version)
+
+changelog_entry = f"## {new_version} ({datetime.now().strftime('%Y-%m-%d')})\n"
+for pr in merged_prs:
+    changelog_entry += f"- {pr.title} (#{pr.number})\n"
+    
+print("Changelog entry generated:\n", changelog_entry)
+
+if not update_changelog(changelog_entry):
+    print("Failed to update the changelog.")
+    exit(4)
+
+create_release(new_version)
+
+print("Done.")
