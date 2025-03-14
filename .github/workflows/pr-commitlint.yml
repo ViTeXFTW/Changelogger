@@ -1,11 +1,11 @@
-name: Release Workflow
+name: Commit Lint on PR
 
 on:
-    push:
+    pull_request:
         branches: [ release ]
 
 jobs:
-    build:
+    commit-lint:
         runs-on: ubuntu-latest
 
         steps:
@@ -20,7 +20,7 @@ jobs:
             - name: Install dependencies
               run: pip install -r requirements.txt
 
-            - name: Run release script
+            - name: Run commitlint
               env:
                 GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: python src/changelog_generator.py
+              run: python src/commit_linter.py ${{ github.event.pull_request.number }}

@@ -47,45 +47,50 @@ def validate_commit_message(message: str) -> list:
     :return: A list of errors.
     """
     
-    errors = []
     lines = message.splitlines()
-    if not lines:
+    header = lines[0]
+    body = "\n".join(lines[1:])
+    
+    errors = []
+    if not header:
         errors.append("Empty commit message.")
         return errors
     
-    header = lines[0]
-    body = '\n'.join(lines[1:]) if len(lines) > 1 else ""
-    
     if len(header) > MAX_COMMIT_HEADER_LENGTH:
         errors.append(
-            f"X title: Exceeds {MAX_COMMIT_HEADER_LENGTH} characters."
-        )
-    
-    if not commit_header_pattern.match(header):
-        errors.append(
-            f"X title format: <type> must be one of {', '.join(lint_types)}."
+            f"Title cannot exceed {MAX_COMMIT_HEADER_LENGTH} characters."
         )
         
-    if ":" not in header:
-        errors.append("X title format: Must contain a colon after <type>.")
+    if not commit_header_pattern.match(header):
+        errors.append("Header must conform to the conventional commit format. See https://www.conventionalcommits.org.")
+        
+    return errors
+    
 
 def lint_pull_request(pr: PullRequest.PullRequest) -> dict:
+    
+    print(f"PR title: {pr.title}")
     
     commit_errors = {}
     commits = pr.get_commits()
     
     for commit in commits:
-        message = commit.commit.message
-        errors = validate_commit_message(message)
+        errors = validate_commit_message(commit.commit.message)
         if errors:
-            commit_errors[commit.sha[:7]] = errors
-            
+            commit_errors[commit.sha[:7]] = {
+                "title": commit.commit.message.splitlines()[0],
+                "errors": errors
+            }
+            print(f"Found {len(errors)} linting errors in commit {commit.sha[:7]}.")  
+    
     return commit_errors
 
 def post_or_update_pr_comment(pr: PullRequest.PullRequest, comment_body: str):
     
     marker = "## Conventional Commit Linting Report"
     try:
+        comment_to_update = None
+        
         comments = pr.get_issue_comments()
         for comment in comments:
             if comment.body.startswith(marker):
@@ -99,8 +104,8 @@ def post_or_update_pr_comment(pr: PullRequest.PullRequest, comment_body: str):
             pr.create_issue_comment(comment_body)
             print("Created new linting report.")
             
-    except:
-        print("Failed to post or update comment.")
+    except Exception as e:
+        print("Failed to post or update comment. Error:", e)
         exit(3)
         
 if len(sys.argv) < 2:
@@ -115,9 +120,9 @@ commit_errors = lint_pull_request(pr)
 if commit_errors:
     report = "## Conventional Commit Linting Report\n"
     report += "The following commits have linting errors:\n\n"
-    for sha, errors in commit_errors.items():
-        report += f"**Commit {sha}**:\n"
-        for err in errors:
+    for sha, details in commit_errors.items():
+        report += f"**Commit:** {details["title"]} ({sha}):\n"
+        for err in details["errors"]:
             report += f"- {err}\n"
         report += "\n"
         
