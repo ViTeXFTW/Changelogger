@@ -1,6 +1,6 @@
 {
   "name": "autochangelog",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "automatically updates the changelog based on conventional commits using github workflows",
   "main": "index.js",
   "scripts": {
