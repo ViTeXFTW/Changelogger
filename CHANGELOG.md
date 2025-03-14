@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## v2.2.1 (2025-03-14)
+- BREAKING CHANGE: test (#23)
+- Test/linter (#22)
+
+
 ## v1.2.1 (2025-03-14)
 - Test/linter (#22)
 
