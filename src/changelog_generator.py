@@ -91,7 +91,21 @@ def update_changelog(new_entry: str) -> str:
         print("Cannot find the changelog file.")
         return ""
     
-    updated_content = current_content.decoded_content.decode("utf-8") + "\n" + new_entry
+    decoded = current_content.decoded_content.decode("utf-8")
+    # Split the existing changelog into lines
+    lines = decoded.splitlines()
+    # Find the index of the first release entry (lines starting with "##")
+    insert_index = 0
+    for i, line in enumerate(lines):
+        if line.startswith("##"):
+            insert_index = i
+            break
+    else:
+        insert_index = len(lines)
+    
+    # Insert new_entry just before the first release entry, maintaining header
+    updated_lines = lines[:insert_index] + [new_entry, ""] + lines[insert_index:]
+    updated_content = "\n".join(updated_lines)
     
     try:
         repository.update_file(current_content.path, COMMIT_MESSAGE, updated_content, current_content.sha, branch=RELEASE_BRANCH)
@@ -100,3 +114,17 @@ def update_changelog(new_entry: str) -> str:
     except:
         print("Cannot update the changelog file.")
         return ""
+    
+def create_release(new_version: str) -> bool:
+    try:
+        repository.create_git_release(
+            tag=new_version,
+            name=new_version,
+            message="Release " + new_version,
+            target_commitish=RELEASE_BRANCH
+        )
+        print("Release created successfully.")
+        return True
+    except:
+        print("Cannot create the release.")
+        return False
