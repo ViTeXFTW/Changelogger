@@ -24,6 +24,7 @@ jobs:
                 changelog: true
                 commit: true
                 push: true
+                root_options: --config .github/config/pyproject.toml
 
             - name: Create Release
               uses: python-semantic-release/publish-action@v9.21.0
